@@ -1,5 +1,7 @@
 package com.mapei.www.service;
 
+import com.mapei.www.dao.TbUserDao;
+import com.mapei.www.entity.TbUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,15 @@ public class HelloWorld {
 
     @Autowired
     Properties properties;
+
+    @Autowired
+    TbUserDao tbUserDao;
+
+    @RequestMapping("selectUser")
+    public List<TbUser> selectUser(){
+        return tbUserDao.SelectTbUser();
+    }
+
 
     @RequestMapping("hello")
     public String hello(){
