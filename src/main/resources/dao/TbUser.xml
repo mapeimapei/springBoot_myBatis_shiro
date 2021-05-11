@@ -7,5 +7,10 @@
         SELECT name,address,email FROM users
     </select>
 
+    <select id="findById" resultType="com.mapei.www.entity.TbUser">
+        SELECT * from users WHERE user_id=#{id}
+    </select>
+
+
 
 </mapper>

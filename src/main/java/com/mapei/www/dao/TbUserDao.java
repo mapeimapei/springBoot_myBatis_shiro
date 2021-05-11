@@ -8,7 +8,8 @@ import java.util.List;
 @Component
 public interface TbUserDao {
 
-    List<TbUser> SelectTbUser();
+    public List<TbUser> SelectTbUser();
+    public TbUser findById(String id);
 
 
 }
