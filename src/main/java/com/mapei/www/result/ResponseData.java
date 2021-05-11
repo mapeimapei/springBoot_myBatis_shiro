@@ -1,42 +1,42 @@
 package com.mapei.www.result;
 //返回结果数据格式封装
 public class ResponseData extends Response {
-    private Object data;
+    private Object result;
 
-    public ResponseData(Object data) {
-        this.data = data;
+    public ResponseData(Object result) {
+        this.result = result;
     }
 
     public ResponseData(ExceptionMsg msg) {
         super(msg);
     }
 
-    public ResponseData(String rspCode, String rspMsg) {
-        super(rspCode, rspMsg);
+    public ResponseData(String resultCode, String resultMsg) {
+        super(resultCode, resultMsg);
     }
 
-    public ResponseData(String rspCode, String rspMsg, Object data) {
-        super(rspCode, rspMsg);
-        this.data = data;
+    public ResponseData(String resultCode, String resultMsg, Object result) {
+        super(resultCode, resultMsg);
+        this.result = result;
     }
 
-    public ResponseData(ExceptionMsg msg, Object data) {
+    public ResponseData(ExceptionMsg msg, Object result) {
         super(msg);
-        this.data = data;
+        this.result = result;
     }
 
-    public Object getData() {
-        return data;
+    public Object getResult() {
+        return result;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setResult(Object result) {
+        this.result = result;
     }
 
     @Override
     public String toString() {
         return "ResponseData{" +
-                "data=" + data +
+                "result=" + result +
                 "} " + super.toString();
     }
 }

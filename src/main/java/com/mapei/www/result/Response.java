@@ -2,45 +2,45 @@ package com.mapei.www.result;
 //实现返回对象实体
 public class Response {
 	/** 返回信息码*/
-	private String rspCode="000000";
+	private String resultCode="000000";
 	/** 返回信息内容*/
-	private String rspMsg="操作成功";
+	private String resultMsg="操作成功";
 
 	public Response() {
 	}
 	
 	public Response(ExceptionMsg msg){
-		this.rspCode=msg.getCode();
-		this.rspMsg=msg.getMsg();
+		this.resultCode=msg.getCode();
+		this.resultMsg=msg.getMsg();
 	}
 	
-	public Response(String rspCode) {
-		this.rspCode = rspCode;
-		this.rspMsg = "";
+	public Response(String resultCode) {
+		this.resultCode = resultCode;
+		this.resultMsg = "";
 	}
 
-	public Response(String rspCode, String rspMsg) {
-		this.rspCode = rspCode;
-		this.rspMsg = rspMsg;
+	public Response(String resultCode, String resultMsg) {
+		this.resultCode = resultCode;
+		this.resultMsg = resultMsg;
 	}
-	public String getRspCode() {
-		return rspCode;
+	public String getresultCode() {
+		return resultCode;
 	}
-	public void setRspCode(String rspCode) {
-		this.rspCode = rspCode;
+	public void setresultCode(String resultCode) {
+		this.resultCode = resultCode;
 	}
-	public String getRspMsg() {
-		return rspMsg;
+	public String getresultMsg() {
+		return resultMsg;
 	}
-	public void setRspMsg(String rspMsg) {
-		this.rspMsg = rspMsg;
+	public void setresultMsg(String resultMsg) {
+		this.resultMsg = resultMsg;
 	}
 
 	@Override
 	public String toString() {
 		return "Response{" +
-				"rspCode='" + rspCode + '\'' +
-				", rspMsg='" + rspMsg + '\'' +
+				"resultCode='" + resultCode + '\'' +
+				", resultMsg='" + resultMsg + '\'' +
 				'}';
 	}
 }

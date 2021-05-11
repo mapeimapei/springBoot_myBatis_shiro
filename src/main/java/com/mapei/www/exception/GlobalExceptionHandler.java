@@ -10,6 +10,7 @@ package com.mapei.www.exception;
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
+import org.apache.shiro.ShiroException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 //import javax.validation.ConstraintViolation;
 //import javax.validation.ConstraintViolationException;
 //import javax.validation.ValidationException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +36,32 @@ public class GlobalExceptionHandler {
     // 日志记录工具
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    //捕捉shiro的异常
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ShiroException.class)
+    public Map<String, Object> ShiroException(ShiroException e) {
+        logger.error("Unauthorized", e);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("resultCode", 401);
+        map.put("resultMsg", e.getMessage());
+        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
+        return map;
+    }
+
+
+    //捕捉UnauthorizedException
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnauthorizedException.class)
+    public Map<String, Object> UnauthorizedException(ShiroException e) {
+        logger.error("Unauthorized", e);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("resultCode", 401);
+        map.put("resultMsg", e.getMessage());
+        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
+        return map;
+    }
+
+
     /**
      * 400 - Bad Request
      */
@@ -42,8 +70,8 @@ public class GlobalExceptionHandler {
     public Map<String, Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         logger.error("缺少请求参数", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", 400);
-        map.put("rspMsg", e.getMessage());
+        map.put("resultCode", 400);
+        map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -56,8 +84,8 @@ public class GlobalExceptionHandler {
     public Map<String, Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         logger.error("参数解析失败", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", 400);
-        map.put("rspMsg", e.getMessage());
+        map.put("resultCode", 400);
+        map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -74,8 +102,8 @@ public class GlobalExceptionHandler {
         String code = error.getDefaultMessage();
         String message = String.format("%s:%s", field, code);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", 400);
-        map.put("rspMsg", message);
+        map.put("resultCode", 400);
+        map.put("resultMsg", message);
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -93,8 +121,8 @@ public class GlobalExceptionHandler {
         String field = error.getField();
         String code = error.getDefaultMessage();
         String message =  String.format("%s:%s", field, code);
-        map.put("rspCode", 400);
-        map.put("rspMsg",message);
+        map.put("resultCode", 400);
+        map.put("resultMsg",message);
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -111,8 +139,8 @@ public class GlobalExceptionHandler {
 //        ConstraintViolation<?> violation = violations.iterator().next();
 //        String message = violation.getMessage();
 //        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("rspCode", 400);
-//        map.put("rspMsg", message);
+//        map.put("resultCode", 400);
+//        map.put("resultMsg", message);
 //        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
 //        return map;
 //    }
@@ -124,8 +152,8 @@ public class GlobalExceptionHandler {
 //    public Map<String, Object> handleValidationException(ValidationException e) {
 //        logger.error("参数验证失败", e);
 //        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("rspCode", 400);
-//        map.put("rspMsg", e.getMessage());
+//        map.put("resultCode", 400);
+//        map.put("resultMsg", e.getMessage());
 //        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
 //        return map;
 //    }
@@ -138,8 +166,8 @@ public class GlobalExceptionHandler {
     public Map<String, Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         logger.error("不支持当前请求方法", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", 405);
-        map.put("rspMsg", e.getMessage());
+        map.put("resultCode", 405);
+        map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -152,8 +180,8 @@ public class GlobalExceptionHandler {
     public Map<String, Object> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
         logger.error("不支持当前媒体类型", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", 415);
-        map.put("rspMsg", e.getMessage());
+        map.put("resultCode", 415);
+        map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -166,8 +194,8 @@ public class GlobalExceptionHandler {
     public Map<String, Object> businessExceptionHandler(BusinessException e) {
         logger.error("自定义业务失败", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", e.getCode());
-        map.put("rspMsg", e.getMessage());
+        map.put("resultCode", e.getCode());
+        map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }
@@ -184,8 +212,8 @@ public class GlobalExceptionHandler {
     public Map<String, Object> defaultErrorHandler(Exception e) {
         logger.error("Exception", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("rspCode", 500);
-        map.put("rspMsg", e.getMessage());
+        map.put("resultCode", 500);
+        map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
     }

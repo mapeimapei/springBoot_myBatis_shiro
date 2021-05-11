@@ -1,11 +1,16 @@
 package com.mapei.www.service;
 
 import com.mapei.www.dao.TbUserDao;
+import com.mapei.www.dao.UserServiceDao;
 import com.mapei.www.entity.TbUser;
+import com.mapei.www.entity.UserService;
 import com.mapei.www.result.ExceptionMsg;
 import com.mapei.www.result.ResponseData;
+import com.mapei.www.util.JWTUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +29,40 @@ public class HelloWorld {
 
     @Autowired
     TbUserDao tbUserDao;
+
+
+    @Autowired
+    UserServiceDao userServiceDao;
+
+
+    @PostMapping("/login")
+    public ResponseData login(@RequestParam("username") String username,
+                              @RequestParam("password") String password) {
+        UserService user = userServiceDao.getUser(username);
+        if (user.getPasswd().equals(password)) {
+            return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(username, password));
+        } else {
+            //throw new UnauthorizedException();
+            return new ResponseData(ExceptionMsg.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/require_auth")
+    @RequiresAuthentication
+    public ResponseData requireAuth() {
+        return new ResponseData(ExceptionMsg.SUCCESS, null);
+    }
+
+
+    @GetMapping("/require_role")
+    @RequiresRoles("0")
+    public ResponseData requireRole() {
+        return new ResponseData("200", "You are visiting require_role", null);
+    }
+
+
+
+
 
     @GetMapping("selectUser")
     public List<TbUser> selectUser(){
