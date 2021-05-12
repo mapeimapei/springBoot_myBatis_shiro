@@ -7,4 +7,27 @@
         SELECT * from users2 WHERE email=#{email}
     </select>
 
+    <select id="addUser" resultType="com.mapei.www.entity.UserService">
+        insert into users2
+        (
+            status,
+            user_id,
+            email,
+            passwd,
+            admin,
+            name
+        )
+        VALUES
+        (
+            #{status},
+            #{user_id},
+            #{email},
+            #{passwd},
+            #{admin},
+            #{name}
+        )
+    </select>
+
+
+
 </mapper>

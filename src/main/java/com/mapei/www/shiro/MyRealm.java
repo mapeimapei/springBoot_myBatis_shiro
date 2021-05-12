@@ -1,7 +1,7 @@
 package com.mapei.www.shiro;
 
-import com.mapei.www.dao.UserServiceDao;
-import com.mapei.www.entity.UserService;
+import com.mapei.www.dao.LoginDao;
+import com.mapei.www.entity.Login;
 import com.mapei.www.util.JWTUtil;
 
 
@@ -25,9 +25,7 @@ public class MyRealm extends AuthorizingRealm {
     private static final Logger LOGGER = LogManager.getLogger(MyRealm.class);
 
     @Autowired
-    UserServiceDao userServiceDao;
-
-
+    LoginDao loginDao;
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
      */
@@ -41,8 +39,8 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = JWTUtil.getUsername(principals.toString());
-        UserService user = userServiceDao.getUser(username);
+        String email = JWTUtil.getUsername(principals.toString());
+        Login user = loginDao.getUser(email);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRole(user.getAdmin());
 //        Set<String> permission = new HashSet<>(Arrays.asList(user.getPermission().split(",")));
@@ -57,17 +55,17 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
-        String username = JWTUtil.getUsername(token);
-        if (username == null) {
+        String email = JWTUtil.getUsername(token);
+        if (email == null) {
             throw new AuthenticationException("token invalid");
         }
 
-        UserService user = userServiceDao.getUser(username);
+        Login user = loginDao.getUser(email);
         if (user == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JWTUtil.verify(token, username, user.getPasswd())) {
+        if (! JWTUtil.verify(token, email, user.getPasswd())) {
             throw new AuthenticationException("Username or password error");
         }
 

@@ -58,6 +58,11 @@ public class ShiroConfig {
         filterRuleMap.put("/**", "jwt");
         // 访问401和404页面不通过我们的Filter
         filterRuleMap.put("/401", "anon");
+        // 配置不需要权限的资源
+        filterRuleMap.put("/static/**", "anon");
+        filterRuleMap.put("/index", "anon");
+        //配置退出过滤器,退出代码Shiro已经替我们实现
+        filterRuleMap.put("/logout", "logout");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

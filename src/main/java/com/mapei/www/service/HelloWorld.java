@@ -1,7 +1,9 @@
 package com.mapei.www.service;
 
+import com.mapei.www.dao.LoginDao;
 import com.mapei.www.dao.TbUserDao;
 import com.mapei.www.dao.UserServiceDao;
+import com.mapei.www.entity.Login;
 import com.mapei.www.entity.TbUser;
 import com.mapei.www.entity.UserService;
 import com.mapei.www.result.ExceptionMsg;
@@ -11,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,15 +37,29 @@ public class HelloWorld {
     @Autowired
     UserServiceDao userServiceDao;
 
+    @Autowired
+    LoginDao loginDao;
+
+
+    @PostMapping("/addUser")
+    public ResponseData addUser(UserService userService) {
+        userService.setUser_id();
+        userServiceDao.addUser(userService);
+        return new ResponseData(ExceptionMsg.SUCCESS, userService);
+    }
+
 
     @PostMapping("/login")
-    public ResponseData login(@RequestParam("username") String username,
+    public ResponseData login(@RequestParam("email") String email,
                               @RequestParam("password") String password) {
-        UserService user = userServiceDao.getUser(username);
-        if (user.getPasswd().equals(password)) {
-            return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(username, password));
+
+
+        Md5Hash passwd = new Md5Hash(password, "mapei", 2);
+        Login user = loginDao.getUser(email);
+
+        if (user.getPasswd().equals(String.valueOf(passwd))) {
+            return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(email, String.valueOf(passwd)));
         } else {
-            //throw new UnauthorizedException();
             return new ResponseData(ExceptionMsg.UNAUTHORIZED);
         }
     }
@@ -61,18 +78,15 @@ public class HelloWorld {
     }
 
 
-
-
-
     @GetMapping("selectUser")
-    public List<TbUser> selectUser(){
+    public List<TbUser> selectUser() {
         return tbUserDao.SelectTbUser();
     }
 
     @GetMapping("selectUser2")
-    public ResponseData selectUser2(){
-        List<TbUser> list =  tbUserDao.SelectTbUser();
-        return new ResponseData(ExceptionMsg.SUCCESS,list);
+    public ResponseData selectUser2() {
+        List<TbUser> list = tbUserDao.SelectTbUser();
+        return new ResponseData(ExceptionMsg.SUCCESS, list);
     }
 
 
@@ -81,25 +95,25 @@ public class HelloWorld {
     public ResponseData findArticle(@PathVariable("id") String id) throws IOException {
         TbUser user = tbUserDao.findById(id);
         if (user != null) {
-            return new ResponseData(ExceptionMsg.SUCCESS,user);
+            return new ResponseData(ExceptionMsg.SUCCESS, user);
         }
-        return new ResponseData(ExceptionMsg.FAILED,user);
+        return new ResponseData(ExceptionMsg.FAILED, user);
     }
 
 
     @ApiOperation(value = "一个演示接口", notes = "这里是描述")
     @GetMapping("/hello")
-    public String hello(){
+    public String hello() {
         return "Hello,Spring Boot!";
     }
 
     @GetMapping("hello2")
-    public String hello2(){
+    public String hello2() {
         return properties.getAge();
     }
 
     @GetMapping("address")
-    public List<String> address(){
+    public List<String> address() {
         return properties.getAddress();
     }
 
