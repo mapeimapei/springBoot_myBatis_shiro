@@ -1,7 +1,7 @@
 package com.mapei.www.shiro;
 
-import com.mapei.www.dao.LoginDao;
-import com.mapei.www.entity.Login;
+import com.mapei.www.dao.UserServiceDao;
+import com.mapei.www.entity.UserService;
 import com.mapei.www.util.JWTUtil;
 
 
@@ -15,17 +15,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
 public class MyRealm extends AuthorizingRealm {
 
     private static final Logger LOGGER = LogManager.getLogger(MyRealm.class);
 
     @Autowired
-    LoginDao loginDao;
+    UserServiceDao userServiceDao;
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
      */
@@ -40,7 +36,7 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String email = JWTUtil.getUsername(principals.toString());
-        Login user = loginDao.getUser(email);
+        UserService user = userServiceDao.getUser(email);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRole(user.getAdmin());
 //        Set<String> permission = new HashSet<>(Arrays.asList(user.getPermission().split(",")));
@@ -60,7 +56,7 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("token invalid");
         }
 
-        Login user = loginDao.getUser(email);
+        UserService user = userServiceDao.getUser(email);
         if (user == null) {
             throw new AuthenticationException("User didn't existed!");
         }

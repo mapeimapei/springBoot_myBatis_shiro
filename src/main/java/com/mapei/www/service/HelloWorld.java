@@ -1,9 +1,7 @@
 package com.mapei.www.service;
 
-import com.mapei.www.dao.LoginDao;
 import com.mapei.www.dao.TbUserDao;
 import com.mapei.www.dao.UserServiceDao;
-import com.mapei.www.entity.Login;
 import com.mapei.www.entity.TbUser;
 import com.mapei.www.entity.UserService;
 import com.mapei.www.result.ExceptionMsg;
@@ -37,13 +35,10 @@ public class HelloWorld {
     @Autowired
     UserServiceDao userServiceDao;
 
-    @Autowired
-    LoginDao loginDao;
-
-
     @PostMapping("/addUser")
     public ResponseData addUser(UserService userService) {
-        userService.setUser_id();
+        userService.UUID();
+        userService.MD5Passwd();
         userServiceDao.addUser(userService);
         return new ResponseData(ExceptionMsg.SUCCESS, userService);
     }
@@ -54,11 +49,11 @@ public class HelloWorld {
                               @RequestParam("password") String password) {
 
 
-        Md5Hash passwd = new Md5Hash(password, "mapei", 2);
-        Login user = loginDao.getUser(email);
+        String passwd = new Md5Hash(password, "mapei", 2).toString();
+        UserService user = userServiceDao.getUser(email);
 
-        if (user.getPasswd().equals(String.valueOf(passwd))) {
-            return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(email, String.valueOf(passwd)));
+        if (user.getPasswd().equals(passwd)) {
+            return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(email, passwd));
         } else {
             return new ResponseData(ExceptionMsg.UNAUTHORIZED);
         }
