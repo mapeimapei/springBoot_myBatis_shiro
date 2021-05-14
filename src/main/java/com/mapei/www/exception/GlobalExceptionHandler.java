@@ -23,9 +23,9 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-//import javax.validation.ConstraintViolation;
-//import javax.validation.ConstraintViolationException;
-//import javax.validation.ValidationException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,8 @@ public class GlobalExceptionHandler {
     // 日志记录工具
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    //捕捉shiro的异常
+
+        //捕捉shiro的异常
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
     public Map<String, Object> ShiroException(ShiroException e) {
@@ -48,14 +49,13 @@ public class GlobalExceptionHandler {
         return map;
     }
 
-
     //捕捉UnauthorizedException
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public Map<String, Object> UnauthorizedException(ShiroException e) {
         logger.error("Unauthorized", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("resultCode", 401);
+        map.put("resultCode", 403);
         map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
     public Map<String, Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         logger.error("缺少请求参数", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("resultCode", 400);
+        map.put("resultCode", 502);
         map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
     public Map<String, Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         logger.error("参数解析失败", e);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("resultCode", 400);
+        map.put("resultCode", 501);
         map.put("resultMsg", e.getMessage());
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
@@ -102,7 +102,7 @@ public class GlobalExceptionHandler {
         String code = error.getDefaultMessage();
         String message = String.format("%s:%s", field, code);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("resultCode", 400);
+        map.put("resultCode", 503);
         map.put("resultMsg", message);
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
@@ -121,7 +121,7 @@ public class GlobalExceptionHandler {
         String field = error.getField();
         String code = error.getDefaultMessage();
         String message =  String.format("%s:%s", field, code);
-        map.put("resultCode", 400);
+        map.put("resultCode", 504);
         map.put("resultMsg",message);
         //发生异常进行日志记录，写入数据库或者其他处理，此处省略
         return map;
@@ -131,32 +131,37 @@ public class GlobalExceptionHandler {
     /**
      * 400 - Bad Request
      */
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(ConstraintViolationException.class)
-//    public Map<String, Object> handleServiceException(ConstraintViolationException e) {
-//        logger.error("参数验证失败", e);
-//        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-//        ConstraintViolation<?> violation = violations.iterator().next();
-//        String message = violation.getMessage();
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("resultCode", 400);
-//        map.put("resultMsg", message);
-//        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
-//        return map;
-//    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Map<String, Object> handleServiceException(ConstraintViolationException e) {
+        logger.error("参数验证失败", e);
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        ConstraintViolation<?> violation = violations.iterator().next();
+        String code = violation.getMessage();
+        String getPropertyPath = violation.getPropertyPath().toString();
+        int index = getPropertyPath.indexOf(".") + 1;
+        int len = getPropertyPath.length();
+        String field = getPropertyPath.substring(index,len);
+        String message =  String.format("%s:%s", field, code);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("resultCode", 505);
+        map.put("resultMsg", message);
+        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
+        return map;
+    }
     /**
      * 400 - Bad Request
      */
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(ValidationException.class)
-//    public Map<String, Object> handleValidationException(ValidationException e) {
-//        logger.error("参数验证失败", e);
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("resultCode", 400);
-//        map.put("resultMsg", e.getMessage());
-//        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
-//        return map;
-//    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidationException.class)
+    public Map<String, Object> handleValidationException(ValidationException e) {
+        logger.error("参数验证失败", e);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("resultCode", 506);
+        map.put("resultMsg", e.getMessage());
+        //发生异常进行日志记录，写入数据库或者其他处理，此处省略
+        return map;
+    }
 
     /**
      * 405 - Method Not Allowed
