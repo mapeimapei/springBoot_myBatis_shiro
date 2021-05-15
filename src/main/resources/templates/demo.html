@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webapp</title>
+
+<meta name="description" content=首页的描述 />
+<meta name="keywords" content="首页关键字1，首页关键字2" />
+
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/ui90.css}" />
+<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/css/html5.css}" />
+<link rel="shortcut icon" th:href="@{/favicon.ico}" />
+<script th:src="@{/js/jquery_latest.js}"></script>
+<!--[if lt IE 9]>
+<script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+<script th:src="@{/js/css3-mediaqueries.js}"></script>
+<![endif]-->
+<script th:src="@{/js/jquery.ui90.js}"></script>
+
+
+
+</head>
+<body>
+<div id="wrapper">
+
+  <div id="topArea">
+    <div class="center clx">
+      <a href="javascript:" class="mobileMenu_toggle fa fa-navicon  fa-2x" id="J_mobileMenu_toggle"></a>
+      <nav id="menuPrimary" class="clx">
+        <ul id="access" class="clx">
+          <li><a href="/">首页</a></li>
+          <li><a href="#">一级菜单</a></li>
+          <li><a href="#">一级菜单</a></li>
+          <li><a href="#">一级菜单</a></li>
+        </ul><!--navList end-->
+        <form name="formsearch" method="get" id="searchBox">
+          <input type="text" name="" class="searchInput"  placeholder="Search…" >
+          <a href="#" class="search_toggle fa fa-search" id="J_search_toggle"></a>
+        </form>
+
+        <div class="loginReg">
+          <a href="/register2">注 册</a> |
+          <a href="/login">登 录</a>
+        </div>
+      </nav><!--menuPrimary end-->
+
+    </div><!--center end-->
+  </div><!--topArea end-->
+
+
+
+  <div id="container">
+    <div class="center">
+
+      <header id="webmaster">
+        <img class="avatar" th:src="@{/images/avatar.jpeg}">
+        <h1 id="siteTitle" class="">
+          <a href="#">site title</a>
+        </h1>
+        <h2 id="siteDescription" class="gary t16 italic pt5 pb5">网站的描述</h2>
+        <ul id="menuSocial" class="clx">
+          <li><a href="#" class="twitter fa fa-twitter"><span class="text">Twitter</span></a></li>
+          <li><a href="#" class="facebook fa fa-facebook-official"><span class="text">facebook</span></a></li>
+          <li><a href="#" class="googlePlus fa fa-google-plus-square"><span class="text">googlePlus</span></a></li>
+          <li><a href="#" class="wordpress fa fa-wordpress"><span class="text">wordpress</span></a></li>
+          <li><a href="#" class="qq fa fa-qq"><span class="text">QQ</span></a></li>
+          <li><a href="#" class="weibo fa fa-weibo"><span class="text">weibo</span></a></li>
+          <li><a href="#" class="weixin fa fa-weixin"><span class="text">weixin</span></a></li>
+        </ul>
+      </header>
+
+      <section id="content">
+        <!-- content -->
+        <article class="post">
+          <header class="entryHeader">
+            <h2 class="entryTitle"><a href="/single/{{u.id}}">{{ u.name }}</a></h2>
+            <ul class="byline clx">
+              <li><a class="fa fa-user" href="#"><span class="text">qintag</span></a></li>
+              <li><time class="fa fa-calendar" datetime="2012-01-07T07:07:21+00:00" title="Saturday, January 7, 2012, 7:07 am">January 7, 2012</time></li>
+              <li><span class="fa fa-eye">100views</span></li>
+              <li><span class="fa fa-folder"><a href="#" rel="category tag">心跳回忆</a></span></li>
+              <li><span class="fa fa-tags"><a href="#">tag1</a>,<a href="#">tag1</a>,<a href="#">tag1</a></span></li>
+              <li class="right"><span class="fa fa-edit"><a href="#">编辑</a></span></li>
+              <li class="right"><span class="fa fa-comments"><a href="#">100</a></span></li>
+            </ul>
+          </header>
+
+          <div class="summary">
+            <p> {{ u.summary }}</p>
+          </div><!--summary end-->
+        </article>
+
+        <div id="pagenavi" class="J_index_pagenavi hide">
+          <span class="page-numbers">1/3 </span> <span class="page-numbers current">1</span> <a class="page-numbers" href="http://www.ui90.com/page/2" title="第 2 页">2</a> <a class="page-numbers" href="http://www.ui90.com/page/3" title="第 3 页">3</a> <a class="page-numbers" href="http://www.ui90.com/page/2" title="下一页">下一页 »</a>
+        </div>
+
+
+        <!-- // content -->
+      </section><!--content end-->
+    </div><!--center end-->
+  </div><!--container end-->
+
+
+  <footer id="footer">
+    <div class="center clx">
+      <ul class="linksList mb5 clx">
+        <span><a href="http://demo.ui90.com/links" target="_blank">友情链接：</a></span>
+        <li><a href="http://pe.ui90.com" target="_blank">小马PE</a></li>
+        <li><a href="http://www.qintag.com" target="_blank">泽坡的后院</a></li>
+        <li><a href="http://www.ui90.com" target="_blank">wordpress主题</a></li>
+      </ul>
+      <p>
+        © 2014 <a target="_blank" href="http://demo.ui90.com/">胖子马演示网站</a> 版权所有 |
+        <a target="_blank" href="http://wordpress.org/">WordPress</a> 强力驱动 |
+        <span id="J_verify">Theme by <a target="_blank" href="http://www.ui90.com/">ui90</a></span> |
+        <a target="_blank" href="http://demo.ui90.com/tags">标签</a> |
+        <a target="_blank" href="http://demo.ui90.com/partners">友情链接</a> |
+        <a target="_blank" href="http://demo.ui90.com/guestbook">留言板</a> |
+        <a target="_blank" href="http://demo.ui90.com/about">关于我们</a> |
+        <a target="_blank" rel="nofollow" href="http://www.miibeian.gov.cn/"> 陕ICP备12345678号</a> |
+        <script src="http://s15.cnzz.com/stat.php?id=4166389&amp;web_id=4166389" language="JavaScript"></script>
+        <script src="http://c.cnzz.com/core.php?web_id=4166389&amp;t=z" charset="utf-8" type="text/javascript"></script>
+        <a href="http://www.cnzz.com/stat/website.php?web_id=4166389" target="_blank" title="站长统计">站长统计</a>
+      </p>
+    </div>
+  </footer>
+  <div id="backTop"><a class="fa fa-chevron-up" href="javascript:void(0);"><span class="text">回到顶部</span></a></div>
+
+</div><!--wrapper end-->
+
+</body>
+</html>
+
