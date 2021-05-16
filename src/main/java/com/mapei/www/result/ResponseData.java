@@ -1,5 +1,9 @@
 package com.mapei.www.result;
+
+import lombok.Data;
+
 //返回结果数据格式封装
+@Data
 public class ResponseData extends Response {
     private Object result;
 
@@ -25,13 +29,6 @@ public class ResponseData extends Response {
         this.result = result;
     }
 
-    public Object getResult() {
-        return result;
-    }
-
-    public void setResult(Object result) {
-        this.result = result;
-    }
 
     @Override
     public String toString() {
@@ -40,5 +37,3 @@ public class ResponseData extends Response {
                 "} " + super.toString();
     }
 }
-
-/*return new ResponseData(ExceptionMsg.SUCCESS,"你好");*/

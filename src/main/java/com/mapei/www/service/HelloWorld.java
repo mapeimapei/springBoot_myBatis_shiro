@@ -1,5 +1,6 @@
 package com.mapei.www.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mapei.www.dao.TbUserDao;
 import com.mapei.www.dao.UserServiceDao;
 import com.mapei.www.entity.FastjsonTest;
@@ -9,6 +10,7 @@ import com.mapei.www.exception.ValidatorUtils;
 import com.mapei.www.result.ExceptionMsg;
 import com.mapei.www.result.ResponseData;
 import com.mapei.www.util.JWTUtil;
+import com.mapei.www.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -23,12 +25,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.mapei.www.entity.Properties;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -51,12 +49,38 @@ public class HelloWorld {
     UserServiceDao userServiceDao;
 
     @RequestMapping(value="/fastjson", method = RequestMethod.POST)
-    public FastjsonTest index1(@RequestBody FastjsonTest vo) {
+    public ResponseData fastjson(@RequestBody FastjsonTest vo) {
 
         vo.setIgnore("ignore field");
         vo.setDate(new Date());
 
-        return vo;
+        return new ResponseData(ExceptionMsg.SUCCESS, vo);
+    }
+
+    @RequestMapping(value="/fastjson2", method = RequestMethod.POST)
+    public ResponseData fastjson2(@RequestBody FastjsonTest vo) {
+        vo.setIgnore("ignore field");
+        vo.setDate(new Date());
+        String[] includeAttributes = {"post_id","string"};
+
+
+        return new ResponseData(ExceptionMsg.SUCCESS, Utils.filterResult(vo, includeAttributes));
+    }
+
+
+    @GetMapping("selectUser3")
+    public ResponseData selectUser3() {
+        List<TbUser> list = tbUserDao.SelectTbUser();
+        String[] includeAttributes = {"name","email"};
+        Object ll = Utils.filterResult(list, includeAttributes);
+        return new ResponseData(ExceptionMsg.SUCCESS, ll);
+    }
+
+
+    @GetMapping("selectUser2")
+    public ResponseData selectUser2() {
+        List<TbUser> list = tbUserDao.SelectTbUser();
+        return new ResponseData(ExceptionMsg.SUCCESS, list);
     }
 
     @PostMapping("/addUser4")
@@ -182,11 +206,7 @@ public class HelloWorld {
         return tbUserDao.SelectTbUser();
     }
 
-    @GetMapping("selectUser2")
-    public ResponseData selectUser2() {
-        List<TbUser> list = tbUserDao.SelectTbUser();
-        return new ResponseData(ExceptionMsg.SUCCESS, list);
-    }
+
 
 
     //查

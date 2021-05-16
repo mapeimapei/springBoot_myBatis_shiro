@@ -1,5 +1,9 @@
 package com.mapei.www.result;
+
+import lombok.Data;
+
 //实现返回对象实体
+@Data
 public class Response {
 	/** 返回信息码*/
 	private String resultCode="000000";
@@ -23,18 +27,6 @@ public class Response {
 		this.resultCode = resultCode;
 		this.resultMsg = resultMsg;
 	}
-	public String getresultCode() {
-		return resultCode;
-	}
-	public void setresultCode(String resultCode) {
-		this.resultCode = resultCode;
-	}
-	public String getresultMsg() {
-		return resultMsg;
-	}
-	public void setresultMsg(String resultMsg) {
-		this.resultMsg = resultMsg;
-	}
 
 	@Override
 	public String toString() {
@@ -45,13 +37,3 @@ public class Response {
 	}
 }
 
-
-/*
-	public Response regist(User user) {
-		try {
-
-			User userNameUser = userRepository.findByName(user.getName());
-			AdminUser admingusername = adminUserRepository.findByName(user.getName());
-			if (null != userNameUser || null != admingusername) {
-				return result(ExceptionMsg.UserNameUsed);
-			}*/
