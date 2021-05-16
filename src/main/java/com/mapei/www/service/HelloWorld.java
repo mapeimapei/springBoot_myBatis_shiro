@@ -2,6 +2,7 @@ package com.mapei.www.service;
 
 import com.mapei.www.dao.TbUserDao;
 import com.mapei.www.dao.UserServiceDao;
+import com.mapei.www.entity.FastjsonTest;
 import com.mapei.www.entity.TbUser;
 import com.mapei.www.entity.UserService;
 import com.mapei.www.exception.ValidatorUtils;
@@ -29,6 +30,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +49,15 @@ public class HelloWorld {
 
     @Autowired
     UserServiceDao userServiceDao;
+
+    @RequestMapping(value="/fastjson", method = RequestMethod.POST)
+    public FastjsonTest index1(@RequestBody FastjsonTest vo) {
+
+        vo.setIgnore("ignore field");
+        vo.setDate(new Date());
+
+        return vo;
+    }
 
     @PostMapping("/addUser4")
     public ResponseData addUser4(@RequestBody UserService userService) {
