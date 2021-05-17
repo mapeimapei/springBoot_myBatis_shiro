@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common :: head}"></head>
+<body>
+<div id="wrapper">
+    <div th:replace="~{common :: header}"></div>
+
+    <div id="container">
+        <div class="center">
+
+            <header id="webmaster">
+                <img class="avatar" th:src="@{/images/avatar.jpeg}">
+                <h1 id="siteTitle" class="">
+                    <a href="#">site title</a>
+                </h1>
+                <h2 id="siteDescription" class="gary t16 italic pt5 pb5">网站的描述</h2>
+                <ul id="menuSocial" class="clx">
+                    <li><a href="#" class="twitter fa fa-twitter"><span class="text">Twitter</span></a></li>
+                    <li><a href="#" class="facebook fa fa-facebook-official"><span class="text">facebook</span></a></li>
+                    <li><a href="#" class="googlePlus fa fa-google-plus-square"><span class="text">googlePlus</span></a></li>
+                    <li><a href="#" class="wordpress fa fa-wordpress"><span class="text">wordpress</span></a></li>
+                    <li><a href="#" class="qq fa fa-qq"><span class="text">QQ</span></a></li>
+                    <li><a href="#" class="weibo fa fa-weibo"><span class="text">weibo</span></a></li>
+                    <li><a href="#" class="weixin fa fa-weixin"><span class="text">weixin</span></a></li>
+                </ul>
+            </header>
+
+            <section id="content">
+                <!-- content -->
+                <article class="post" th:each="u : ${page.list}">
+                    <header class="entryHeader">
+                        <h2 class="entryTitle"><a th:href="@{/single/${u.id}}" th:text="${u.name}">name</a></h2>
+                        <ul class="byline clx">
+                            <li><a class="fa fa-user" href="#"><span class="text" th:text="${u.user_name}">user_name</span></a></li>
+                            <li><time class="fa fa-calendar" datetime="" title="" th:text="${u.created_at}">created_at</time></li>
+                            <li><span class="fa fa-eye">100views</span></li>
+                            <li><span class="fa fa-folder"><a href="#" rel="category tag">心跳回忆</a></span></li>
+                            <li><span class="fa fa-tags"><a href="#">tag1</a>,<a href="#">tag1</a>,<a href="#">tag1</a></span></li>
+                            <li class="right"><span class="fa fa-edit"><a href="#">编辑</a></span></li>
+                            <li class="right"><span class="fa fa-comments"><a href="#">100</a></span></li>
+                        </ul>
+                    </header>
+
+                    <div class="summary">
+                        <p th:text="${u.summary}">summary</p>
+                    </div><!--summary end-->
+                </article>
+
+                <div id="pagenavi" class="J_index_pagenavi">
+                    <a class="page-numbers" th:href="@{/index?start=1}">[首页]</a>
+                    <a class="page-numbers" th:if="${not page.IsFirstPage}" th:href="@{/index(start=${page.pageNum-1})}">[上页]</a>
+                    <a class="page-numbers" th:if="${not page.IsLastPage}" th:href="@{/index(start=${page.pageNum+1})}">[下页]</a>
+                    <a class="page-numbers" th:href="@{/index(start=${page.pages})}">[末页]</a>
+                </div>
+
+                <!-- // content -->
+            </section><!--content end-->
+        </div><!--center end-->
+    </div><!--container end-->
+
+    <div th:include="~{common :: footer}"></div>
+</div><!--wrapper end-->
+</body>
+</html>
+

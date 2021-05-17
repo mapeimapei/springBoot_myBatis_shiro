@@ -48,10 +48,9 @@ public class fastJsonConfig extends WebMvcConfigurationSupport {
         // 解决中文乱码问题，相当于在Controller上的@RequestMapping中加了个属性produces = "application/json"
         mediaTypeList.add(MediaType.APPLICATION_JSON);
         converter.setSupportedMediaTypes(mediaTypeList);
+        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+        converters.add(stringConverter);
         converters.add(converter);
-
-
-
 
     }
 }
