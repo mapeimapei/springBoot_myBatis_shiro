@@ -7,4 +7,9 @@
         SELECT * from blogs
     </select>
 
+    <select id="queryPostById" resultType="com.mapei.www.entity.Post">
+        SELECT * FROM blogs WHERE id = #{id}
+    </select>
+
+
 </mapper>

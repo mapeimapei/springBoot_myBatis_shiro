@@ -11,6 +11,7 @@ import java.util.List;
 public interface PostServiceDao {
 
     public List<Post> getPost();
+    public Post queryPostById(String id);
 
 
 }

@@ -29,7 +29,7 @@
                 <!-- content -->
                 <article class="post" th:each="u : ${page.list}">
                     <header class="entryHeader">
-                        <h2 class="entryTitle"><a th:href="@{/single/${u.id}}" th:text="${u.name}">name</a></h2>
+                        <h2 class="entryTitle"><a th:href="@{/single(id=${u.id})}" th:text="${u.name}">name</a></h2>
                         <ul class="byline clx">
                             <li><a class="fa fa-user" href="#"><span class="text" th:text="${u.user_name}">user_name</span></a></li>
                             <li><time class="fa fa-calendar" datetime="" title="" th:text="${u.created_at}">created_at</time></li>

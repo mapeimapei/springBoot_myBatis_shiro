@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common :: head}"></head>
+<body>
+<div id="wrapper">
+    <div th:replace="~{common :: header}"></div>
+
+    <div id="container">
+        <div class="center">
+
+            <section id="content">
+                <nav id="breadcrumb" class="hide clx">
+                    <a href="#" class="">首页</a> <i class="fa fa-angle-right"></i> <a href="#" class="">活动列表</a> <i
+                        class="fa fa-angle-right"></i> <span>内容详情</span>
+                </nav>
+                <article class="post">
+                    <header class="entryHeader">
+                        <h2 class="entryTitle cc" th:text="${post.name}">name</h2>
+                        <ul class="byline clx">
+                            <li class="author"><i></i><a href="#" th:text="${post.user_name}">${post.user_name}</a></li>
+                            <li class="datetime" th:text="${post.created_at}"><i></i>${post.created_at}</li>
+                            <li class="comments"><i></i> 100</li>
+                            <li class="views"><i></i>100views</li>
+                            <li class="tags"><i></i><a href="#">tag1</a>,<a href="#">tag1</a>,<a href="#">tag1</a></li>
+                        </ul>
+                    </header>
+
+                    <div class="postContent" th:utext="${post.content}">
+                        ${post.content}
+                    </div><!--postContent end-->
+                    <footer class="entryFooter">
+                        <ul class="entryTerms">
+                            <li class="category"><i></i>Posted in <a href="#">category</a>,<a href="#">category2</a></li>
+                            <li class="tags"><i></i>Tagged <a href="#">Tag</a>,<a href="#">Tag2</a></li>
+                        </ul>
+                    </footer><!--entryFooter end-->
+                </article>
+                <div class="loopNav hide"><!-- 上下篇 -->
+                    <p>[上一篇]<a href="#" id="123" title="">晓然网主题</a></p>
+                    <p>[下一篇]<a href="#" id="321" title="">Q9主题两个自定义菜单的操作</a></p>
+                </div>
+                <div class="commentsTemplate">
+                    评论
+                </div>
+            </section><!--content end-->
+
+
+        </div><!--center end-->
+    </div><!--container end-->
+    <div th:include="~{common :: footer}"></div>
+</div><!--wrapper end-->
+</body>
+</html>
+
