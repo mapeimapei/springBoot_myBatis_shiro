@@ -1,10 +1,17 @@
 package com.mapei.www.result;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Data;
+
+import java.io.Serializable;
 
 //返回结果数据格式封装
 @Data
-public class ResponseData extends Response {
+public class ResponseData extends Response implements Serializable {
+
+    @JSONField(serialzeFeatures = {SerializerFeature.WriteMapNullValue})
     private Object result;
 
     public ResponseData(Object result) {
@@ -21,12 +28,15 @@ public class ResponseData extends Response {
 
     public ResponseData(String resultCode, String resultMsg, Object result) {
         super(resultCode, resultMsg);
-        this.result = result;
+
+        String jsonStr = JSONObject.toJSONString(result);
+        this.result = JSONObject.parse(jsonStr);
     }
 
     public ResponseData(ExceptionMsg msg, Object result) {
         super(msg);
-        this.result = result;
+        String jsonStr = JSONObject.toJSONString(result);
+        this.result = JSONObject.parse(jsonStr);
     }
 
 

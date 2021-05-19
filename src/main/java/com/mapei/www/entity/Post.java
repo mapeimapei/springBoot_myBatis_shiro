@@ -15,6 +15,7 @@ import java.util.UUID;
 public class Post {
 
     @NotBlank
+    @JSONField(name = "post_id")
     private String id;
     @NotBlank
     private String user_id;
@@ -26,6 +27,7 @@ public class Post {
     @NotBlank
     private String summary;
     @NotBlank
+    @JSONField(serialize = false)
     private String content;
 
     private String created_at;

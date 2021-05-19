@@ -31,6 +31,7 @@ public class BlogMavController {
     public String index(Model m, @RequestParam(value="start",defaultValue="0")int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         PageHelper.startPage(start,size,"created_at desc");
         List<Post> cs = postService.getPost();
+        System.out.println(cs);
         PageInfo<Post> page = new PageInfo<>(cs);
         System.out.println(page);
         m.addAttribute("page", page);

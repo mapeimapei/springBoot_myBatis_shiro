@@ -1,14 +1,14 @@
 package com.mapei.www.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mapei.www.dao.TbUserDao;
 import com.mapei.www.dao.UserServiceDao;
-import com.mapei.www.entity.FastjsonTest;
-import com.mapei.www.entity.TbUser;
-import com.mapei.www.entity.UserService;
+import com.mapei.www.entity.*;
 import com.mapei.www.exception.ValidatorUtils;
 import com.mapei.www.result.ExceptionMsg;
 import com.mapei.www.result.ResponseData;
+import com.mapei.www.service.impl.PostService;
 import com.mapei.www.util.JWTUtil;
 import com.mapei.www.util.Utils;
 import io.swagger.annotations.Api;
@@ -22,8 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import com.mapei.www.entity.Properties;
 
 import javax.validation.ValidationException;
 import javax.validation.constraints.Email;
@@ -47,6 +45,34 @@ public class HelloWorld {
 
     @Autowired
     UserServiceDao userServiceDao;
+
+    @Autowired
+    PostService postService;
+
+    @GetMapping("selectUser5")
+    public ResponseData selectUser5() {
+        List<Post> cs = postService.getPost();
+        String[] includeAttributes = {"name","post_id","user_name"};
+        Object ll = Utils.filterResult(cs, includeAttributes);
+        return new ResponseData(ExceptionMsg.SUCCESS, ll);
+    }
+
+
+
+    @GetMapping("selectUser4")
+    public ResponseData selectUser4() {
+        List<Post> cs = postService.getPost();
+
+//        String jsonStr = JSONObject.toJSONString(cs);
+//        Object cc = JSONObject.parse(jsonStr);
+//        List<Post> res = JSONArray.parseArray(jsonStr.trim(), Post.class);
+//        String[] includeAttributes = {"name","post_id","user_name"};
+//        Object ll = Utils.filterResult(cs, includeAttributes);
+        return new ResponseData(ExceptionMsg.SUCCESS, cs);
+    }
+
+
+
 
     @RequestMapping(value="/fastjson", method = RequestMethod.POST)
     public ResponseData fastjson(@RequestBody FastjsonTest vo) {
