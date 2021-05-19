@@ -7,9 +7,8 @@ import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 public class Utils {
 
     /**
-     *
      * @param object 需要处理的数据
-     * @param fields  需要返回给前端的字段
+     * @param fields 需要返回给前端的字段
      * @return
      */
     public static Object filterResult(Object object, String[] fields) {

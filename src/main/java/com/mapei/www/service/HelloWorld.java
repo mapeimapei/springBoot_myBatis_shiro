@@ -52,11 +52,9 @@ public class HelloWorld {
     @GetMapping("selectUser5")
     public ResponseData selectUser5() {
         List<Post> cs = postService.getPost();
-        String[] includeAttributes = {"name","post_id","user_name"};
-        Object ll = Utils.filterResult(cs, includeAttributes);
-        return new ResponseData(ExceptionMsg.SUCCESS, ll);
+        String[] fields = {"name", "post_id", "user_name"};
+        return new ResponseData(ExceptionMsg.SUCCESS, cs, fields);
     }
-
 
 
     @GetMapping("selectUser4")
@@ -72,9 +70,7 @@ public class HelloWorld {
     }
 
 
-
-
-    @RequestMapping(value="/fastjson", method = RequestMethod.POST)
+    @RequestMapping(value = "/fastjson", method = RequestMethod.POST)
     public ResponseData fastjson(@RequestBody FastjsonTest vo) {
 
         vo.setIgnore("ignore field");
@@ -83,11 +79,11 @@ public class HelloWorld {
         return new ResponseData(ExceptionMsg.SUCCESS, vo);
     }
 
-    @RequestMapping(value="/fastjson2", method = RequestMethod.POST)
+    @RequestMapping(value = "/fastjson2", method = RequestMethod.POST)
     public ResponseData fastjson2(@RequestBody FastjsonTest vo) {
         vo.setIgnore("ignore field");
         vo.setDate(new Date());
-        String[] includeAttributes = {"post_id","string"};
+        String[] includeAttributes = {"post_id", "string"};
 
 
         return new ResponseData(ExceptionMsg.SUCCESS, Utils.filterResult(vo, includeAttributes));
@@ -97,7 +93,7 @@ public class HelloWorld {
     @GetMapping("selectUser3")
     public ResponseData selectUser3() {
         List<TbUser> list = tbUserDao.SelectTbUser();
-        String[] includeAttributes = {"name","email"};
+        String[] includeAttributes = {"name", "email"};
         Object ll = Utils.filterResult(list, includeAttributes);
         return new ResponseData(ExceptionMsg.SUCCESS, ll);
     }
@@ -120,10 +116,8 @@ public class HelloWorld {
     }
 
 
-
-
     @PostMapping("/addUser3")
-    public ResponseData addUser3(@Validated @RequestBody UserService userService ,BindingResult bindingResult) {
+    public ResponseData addUser3(@Validated @RequestBody UserService userService, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new ValidationException("参数校验失败");
@@ -136,7 +130,6 @@ public class HelloWorld {
     }
 
 
-
     @PostMapping("/addUser2")
     public ResponseData addUser2(@Validated @RequestBody UserService userService) {
         userService.UUID();
@@ -144,9 +137,6 @@ public class HelloWorld {
         userServiceDao.addUser(userService);
         return new ResponseData(ExceptionMsg.SUCCESS, userService);
     }
-
-
-
 
 
     @PostMapping("/addUser")
@@ -164,7 +154,7 @@ public class HelloWorld {
         String email = (String) params.get("email");
         String password = (String) params.get("password");
 
-        System.out.println(email+password);
+        System.out.println(email + password);
 
         String passwd = new Md5Hash(password, "mapei", 2).toString();
         UserService user = userServiceDao.getUser(email);
@@ -179,7 +169,7 @@ public class HelloWorld {
 
     @GetMapping("/test")
     public ResponseData test(
-            @Length(min = 3,max = 6,message = "长度三到六")
+            @Length(min = 3, max = 6, message = "长度三到六")
             @RequestParam String name,
             @Email
             @RequestParam String email
@@ -192,13 +182,12 @@ public class HelloWorld {
     }
 
 
-
     @PostMapping("/login")
     public ResponseData login(
             String email,
             String password) {
 
-        if(password.isEmpty() || null == password){
+        if (password.isEmpty() || null == password) {
             throw new ValidationException("密码不能为空");
 
         }
@@ -231,8 +220,6 @@ public class HelloWorld {
     public List<TbUser> selectUser() {
         return tbUserDao.SelectTbUser();
     }
-
-
 
 
     //查
