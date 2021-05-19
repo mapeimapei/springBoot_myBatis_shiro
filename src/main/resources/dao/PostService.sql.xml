@@ -4,7 +4,7 @@
 <mapper namespace="com.mapei.www.dao.PostServiceDao">
 
     <select id="getPost" resultType="com.mapei.www.entity.Post">
-        SELECT * from blogs
+        SELECT * from blogs ORDER BY created_at desc
     </select>
 
     <select id="queryPostById" resultType="com.mapei.www.entity.Post">

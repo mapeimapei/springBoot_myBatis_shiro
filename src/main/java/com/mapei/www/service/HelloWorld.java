@@ -1,7 +1,5 @@
 package com.mapei.www.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.mapei.www.dao.TbUserDao;
 import com.mapei.www.dao.UserServiceDao;
 import com.mapei.www.entity.*;
@@ -106,46 +104,46 @@ public class HelloWorld {
     }
 
     @PostMapping("/addUser4")
-    public ResponseData addUser4(@RequestBody UserService userService) {
-        ValidatorUtils.validateEntity(userService);
+    public ResponseData addUser4(@RequestBody User user) {
+        ValidatorUtils.validateEntity(user);
 
-        userService.UUID();
-        userService.MD5Passwd();
-        userServiceDao.addUser(userService);
-        return new ResponseData(ExceptionMsg.SUCCESS, userService);
+        user.UUID();
+        user.MD5Passwd();
+        userServiceDao.addUser(user);
+        return new ResponseData(ExceptionMsg.SUCCESS, user);
     }
 
 
     @PostMapping("/addUser3")
-    public ResponseData addUser3(@Validated @RequestBody UserService userService, BindingResult bindingResult) {
+    public ResponseData addUser3(@Validated @RequestBody User user, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new ValidationException("参数校验失败");
         }
 
-        userService.UUID();
-        userService.MD5Passwd();
-        userServiceDao.addUser(userService);
-        return new ResponseData(ExceptionMsg.SUCCESS, userService);
+        user.UUID();
+        user.MD5Passwd();
+        userServiceDao.addUser(user);
+        return new ResponseData(ExceptionMsg.SUCCESS, user);
     }
 
 
     @PostMapping("/addUser2")
-    public ResponseData addUser2(@Validated @RequestBody UserService userService) {
-        userService.UUID();
-        userService.MD5Passwd();
-        userServiceDao.addUser(userService);
-        return new ResponseData(ExceptionMsg.SUCCESS, userService);
+    public ResponseData addUser2(@Validated @RequestBody User user) {
+        user.UUID();
+        user.MD5Passwd();
+        userServiceDao.addUser(user);
+        return new ResponseData(ExceptionMsg.SUCCESS, user);
     }
 
 
     @PostMapping("/addUser")
-    public ResponseData addUser(@Validated UserService userService) {
+    public ResponseData addUser(@Validated User user) {
 
-        userService.UUID();
-        userService.MD5Passwd();
-        userServiceDao.addUser(userService);
-        return new ResponseData(ExceptionMsg.SUCCESS, userService);
+        user.UUID();
+        user.MD5Passwd();
+        userServiceDao.addUser(user);
+        return new ResponseData(ExceptionMsg.SUCCESS, user);
     }
 
     @PostMapping("/login2")
@@ -157,7 +155,7 @@ public class HelloWorld {
         System.out.println(email + password);
 
         String passwd = new Md5Hash(password, "mapei", 2).toString();
-        UserService user = userServiceDao.getUser(email);
+        User user = userServiceDao.getUser(email);
 
         if (user.getPasswd().equals(passwd)) {
             return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(email, passwd));
@@ -193,7 +191,7 @@ public class HelloWorld {
         }
 
         String passwd = new Md5Hash(password, "mapei", 2).toString();
-        UserService user = userServiceDao.getUser(email);
+        User user = userServiceDao.getUser(email);
 
         if (user.getPasswd().equals(passwd)) {
             return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(email, passwd));

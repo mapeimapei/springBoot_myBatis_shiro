@@ -1,7 +1,7 @@
 package com.mapei.www.shiro;
 
 import com.mapei.www.dao.UserServiceDao;
-import com.mapei.www.entity.UserService;
+import com.mapei.www.entity.User;
 import com.mapei.www.util.JWTUtil;
 
 
@@ -36,7 +36,7 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String email = JWTUtil.getUsername(principals.toString());
-        UserService user = userServiceDao.getUser(email);
+        User user = userServiceDao.getUser(email);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRole(user.getAdmin());
 //        Set<String> permission = new HashSet<>(Arrays.asList(user.getPermission().split(",")));
@@ -56,7 +56,7 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("token invalid");
         }
 
-        UserService user = userServiceDao.getUser(email);
+        User user = userServiceDao.getUser(email);
         if (user == null) {
             throw new AuthenticationException("User didn't existed!");
         }

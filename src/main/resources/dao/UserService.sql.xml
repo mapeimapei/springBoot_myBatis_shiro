@@ -3,11 +3,11 @@
 
 <mapper namespace="com.mapei.www.dao.UserServiceDao">
 
-    <select id="getUser" resultType="com.mapei.www.entity.UserService">
+    <select id="getUser" resultType="com.mapei.www.entity.User">
         SELECT * from users2 WHERE email=#{email}
     </select>
 
-    <select id="addUser" resultType="com.mapei.www.entity.UserService">
+    <select id="addUser" resultType="com.mapei.www.entity.User">
         insert into users2
         (
             status,

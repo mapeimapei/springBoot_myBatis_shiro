@@ -17,17 +17,23 @@ public class Post {
     @NotBlank
     @JSONField(name = "post_id")
     private String id;
+
     @NotBlank
     private String user_id;
+
     @NotBlank
     private String user_name;
+
+    @JSONField(serialize = false)
     private String user_image = "about:blank";
+
     @NotBlank
     private String name;
+
     @NotBlank
     private String summary;
+
     @NotBlank
-    @JSONField(serialize = false)
     private String content;
 
     private String created_at;

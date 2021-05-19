@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @Data
-public class UserService {
+public class User {
 
 
     @NotBlank(message = "Email不能为空")
