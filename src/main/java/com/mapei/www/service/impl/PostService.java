@@ -37,4 +37,31 @@ public class PostService implements IPostService {
         return post;
     }
 
+
+    /**
+     * 添加文章
+     * @param post
+     * @return
+     */
+    public Post addSingle(Post post){
+        postServiceDao.addSingle(post);
+        return post;
+    }
+
+    /**
+     * 更新文章
+     * @param post
+     * @return
+     */
+    public Post updateSingle(Post post){
+        postServiceDao.updateSingle(post);
+        return post;
+    }
+
+
+    public void deleteSingle(String id){
+       postServiceDao.deleteSingle(id);
+    }
+
+
 }

@@ -18,4 +18,28 @@ public interface IPostService {
      */
     public Post queryPostById(String id);
 
+    /**
+     * 添加文章
+     * @param post
+     * @return
+     */
+    public Post addSingle(Post post);
+
+
+    /**
+     * 更新文章
+     * @param post
+     * @return
+     */
+    public Post updateSingle(Post post);
+
+    /**
+     *  删除文章
+     * @param post
+     * @return
+     */
+    public void deleteSingle(String id);
+
+
+
 }

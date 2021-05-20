@@ -14,7 +14,6 @@ import java.util.UUID;
 @Data
 public class Post {
 
-    @NotBlank
     @JSONField(name = "post_id")
     private String id;
 
@@ -44,12 +43,12 @@ public class Post {
 
     public void formatTime(String created_at){
         String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-        this.created_at = new SimpleDateFormat(TIME_FORMAT).format(new Date(Long.parseLong(created_at+"000")));
+        this.created_at = new SimpleDateFormat(TIME_FORMAT).format(new Date(Long.parseLong(created_at)));
     }
 
     public void curTime(){
-        this.created_at = new Date().toString();
+        this.created_at = String.valueOf(System.currentTimeMillis());
+        System.out.println(this.created_at);
     }
-
 
 }

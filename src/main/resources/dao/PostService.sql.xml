@@ -3,6 +3,9 @@
 
 <mapper namespace="com.mapei.www.dao.PostServiceDao">
 
+
+
+
     <select id="getPost" resultType="com.mapei.www.entity.Post">
         SELECT * from blogs ORDER BY created_at desc
     </select>
@@ -10,6 +13,38 @@
     <select id="queryPostById" resultType="com.mapei.www.entity.Post">
         SELECT * FROM blogs WHERE id = #{id}
     </select>
+
+    <select id="addSingle" resultType="com.mapei.www.entity.Post">
+        insert into blogs
+            (content, name, id, summary, user_name, created_at,user_image,user_id)
+        VALUES(
+            #{content},
+            #{name},
+            #{id},
+            #{summary},
+            #{user_name},
+            #{created_at},
+            #{user_image},
+            #{user_id}
+        )
+    </select>
+
+    <select id="updateSingle" resultType="com.mapei.www.entity.Post">
+        UPDATE blogs SET
+            content = #{content},
+            name = #{name},
+            summary = #{summary},
+            user_name = #{user_name},
+            created_at = #{created_at},
+            user_image = #{user_image},
+            user_id = #{user_id}
+        where id = #{id}
+    </select>
+
+    <select id="deleteSingle" resultType="com.mapei.www.entity.Post">
+        delete FROM blogs WHERE id = #{id}
+    </select>
+
 
 
 </mapper>
