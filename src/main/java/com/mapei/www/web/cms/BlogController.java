@@ -30,7 +30,6 @@ public class BlogController {
                 "name",
                 "post_id",
                 "user_name",
-                "content",
                 "created_at",
                 "summary"
         };

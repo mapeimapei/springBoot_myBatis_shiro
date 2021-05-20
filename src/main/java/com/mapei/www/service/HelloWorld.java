@@ -8,7 +8,7 @@ import com.mapei.www.result.ExceptionMsg;
 import com.mapei.www.result.ResponseData;
 import com.mapei.www.service.impl.PostService;
 import com.mapei.www.util.JWTUtil;
-import com.mapei.www.util.Utils;
+import com.mapei.www.util.FilterResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -63,7 +63,7 @@ public class HelloWorld {
 //        Object cc = JSONObject.parse(jsonStr);
 //        List<Post> res = JSONArray.parseArray(jsonStr.trim(), Post.class);
 //        String[] includeAttributes = {"name","post_id","user_name"};
-//        Object ll = Utils.filterResult(cs, includeAttributes);
+//        Object ll = FilterResult.main(cs, includeAttributes);
         return new ResponseData(ExceptionMsg.SUCCESS, cs);
     }
 
@@ -84,7 +84,7 @@ public class HelloWorld {
         String[] includeAttributes = {"post_id", "string"};
 
 
-        return new ResponseData(ExceptionMsg.SUCCESS, Utils.filterResult(vo, includeAttributes));
+        return new ResponseData(ExceptionMsg.SUCCESS, FilterResult.main(vo, includeAttributes));
     }
 
 
@@ -92,7 +92,7 @@ public class HelloWorld {
     public ResponseData selectUser3() {
         List<TbUser> list = tbUserDao.SelectTbUser();
         String[] includeAttributes = {"name", "email"};
-        Object ll = Utils.filterResult(list, includeAttributes);
+        Object ll = FilterResult.main(list, includeAttributes);
         return new ResponseData(ExceptionMsg.SUCCESS, ll);
     }
 

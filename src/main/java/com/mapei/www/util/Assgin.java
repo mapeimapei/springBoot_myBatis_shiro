@@ -1,10 +1,5 @@
 package com.mapei.www.util;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.spring.PropertyPreFilters;
-
-
 import com.google.common.collect.Maps;
 import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.beans.BeanMap;
@@ -13,31 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyDescriptor;
-import java.util.HashMap;
 import java.util.Map;
 
+public class Assgin {
 
-public class Utils {
+    static Logger logger = LoggerFactory.getLogger(Assgin.class);
 
-    /**
-     * @param object 需要处理的数据
-     * @param fields 需要返回给前端的字段
-     * @return
-     */
-
-    static Logger logger = LoggerFactory.getLogger(Utils.class);
-
-    public static Object filterResult(Object object, String[] fields) {
-        PropertyPreFilters propertyPreFilters = new PropertyPreFilters();
-        PropertyPreFilters.MySimplePropertyPreFilter include = propertyPreFilters.addFilter();
-        include.addIncludes(fields);//include.addExcludes(fields) 或者排除掉一些字段
-        String json = JSONObject.toJSONString(object, include, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue);
-
-        return JSONObject.parse(json);
-    }
 
     //assgin
-    public static Object Assgin(Object dest, Map<String, Object> addProperties) {
+    public static Object main(Object dest, Map<String, Object> addProperties) {
         // get property map
         PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
         PropertyDescriptor[] descriptors = propertyUtilsBean.getPropertyDescriptors(dest);

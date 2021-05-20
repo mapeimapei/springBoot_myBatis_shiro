@@ -20,7 +20,7 @@ import javax.validation.ValidationException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mapei.www.util.Utils;
+import com.mapei.www.util.Assgin;
 
 @RestController
 @Validated
@@ -50,10 +50,8 @@ public class UserController {
         if (user.getPasswd().equals(passwd)) {
             Map<String, Object> addProperties = new HashMap();
             addProperties.put("token", JWTUtil.sign(email, passwd));
-            Object loginInf = Utils.Assgin(user, addProperties);
-
+            Object loginInf = Assgin.main(user, addProperties);
             String[] keys = {"user_id", "name", "email", "token", "admin"};
-
             return new ResponseData(ExceptionMsg.SUCCESS, loginInf, keys);
         } else {
             return new ResponseData(ExceptionMsg.UNAUTHORIZED);

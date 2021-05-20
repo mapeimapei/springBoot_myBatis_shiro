@@ -3,7 +3,8 @@ package com.mapei.www.result;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.mapei.www.util.Utils;
+import com.mapei.www.util.FilterResult;
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public class ResponseData extends Response implements Serializable {
         super(msg);
         String jsonStr = JSONObject.toJSONString(result);
         Object res = JSONObject.parse(jsonStr);
-        this.result = Utils.filterResult(res, fields);
+        this.result = FilterResult.main(res, fields);
     }
 
 
