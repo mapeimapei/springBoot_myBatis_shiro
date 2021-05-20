@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.ValidationException;
+import java.util.HashMap;
 import java.util.Map;
+
+import com.mapei.www.util.Utils;
 
 @RestController
 @Validated
@@ -27,7 +30,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
 
 
     @PostMapping("/login")
@@ -40,17 +42,24 @@ public class UserController {
 
         if (password.isEmpty() || null == password) {
             throw new ValidationException("密码不能为空");
-
         }
 
         String passwd = new Md5Hash(password, "mapei", 2).toString();
         User user = userService.getUser(email);
 
         if (user.getPasswd().equals(passwd)) {
-            return new ResponseData(ExceptionMsg.SUCCESS, JWTUtil.sign(email, passwd));
+            Map<String, Object> addProperties = new HashMap();
+            addProperties.put("token", JWTUtil.sign(email, passwd));
+            Object loginInf = Utils.Assgin(user, addProperties);
+
+            String[] keys = {"user_id", "name", "email", "token", "admin"};
+
+            return new ResponseData(ExceptionMsg.SUCCESS, loginInf, keys);
         } else {
             return new ResponseData(ExceptionMsg.UNAUTHORIZED);
         }
+
+
     }
 
 }
