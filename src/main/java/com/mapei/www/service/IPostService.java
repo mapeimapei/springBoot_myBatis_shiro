@@ -35,10 +35,10 @@ public interface IPostService {
 
     /**
      *  删除文章
-     * @param post
+     * @param id
      * @return
      */
-    public void deleteSingle(String id);
+    public int deleteSingle(String id);
 
 
 

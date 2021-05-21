@@ -58,9 +58,13 @@ public class PostService implements IPostService {
         return post;
     }
 
-
-    public void deleteSingle(String id){
-       postServiceDao.deleteSingle(id);
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+    public int deleteSingle(String id){
+        return postServiceDao.deleteSingle(id);
     }
 
 

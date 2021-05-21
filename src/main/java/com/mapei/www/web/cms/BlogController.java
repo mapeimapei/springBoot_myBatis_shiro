@@ -26,7 +26,6 @@ public class BlogController {
     PostService postService;
 
     /**
-     *
      * @return
      */
     @GetMapping("post/getPosts")
@@ -43,13 +42,12 @@ public class BlogController {
     }
 
     /**
-     *
      * @param id
      * @return
      */
     @GetMapping("post/getSingleById/{id}")
     public ResponseData getSingleById(@PathVariable String id) {
-        Post post= postService.queryPostById(id);
+        Post post = postService.queryPostById(id);
         return new ResponseData(ExceptionMsg.SUCCESS, post);
     }
 
@@ -59,12 +57,12 @@ public class BlogController {
         post.curTime();
 
         Post ps = null;
-        if(post.getId().isEmpty() || post.getId() == null){
+        if (post.getId().isEmpty() || post.getId() == null) {
             post.UUID();
-            ps= postService.addSingle(post);
+            ps = postService.addSingle(post);
 
-        }else{
-            ps= postService.updateSingle(post);
+        } else {
+            ps = postService.updateSingle(post);
         }
 
         return new ResponseData(ExceptionMsg.SUCCESS, ps);
@@ -75,29 +73,15 @@ public class BlogController {
 
         String id = (String) params.get("id");
 
-        try{
-            postService.deleteSingle(id);
+        int n = postService.deleteSingle(id);
+        if (n > 0) {
             return new ResponseData(ExceptionMsg.SUCCESS);
-        }catch (Exception e){
-            e.printStackTrace();
+        } else {
             return new ResponseData(ExceptionMsg.FAILED);
         }
 
 
-
-//        String n = postService.deleteSingle(id);
-//
-//        if(n.equals("1")){
-//            System.out.println(n);
-//            return new ResponseData(ExceptionMsg.SUCCESS);
-//        }else{
-//            return new ResponseData(ExceptionMsg.FAILED);
-//        }
-
-
-
     }
-
 
 
 }

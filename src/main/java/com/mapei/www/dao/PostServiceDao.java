@@ -20,7 +20,7 @@ public interface PostServiceDao {
 //    update：更新n条记录，返回影响行数n。（n>=0）
 //    delete： 删除n条记录，返回影响行数n。（n>=0）
 
-    public void deleteSingle(String id);
+    int deleteSingle(String id);
 
 
 
