@@ -17,8 +17,8 @@ public class Cart {
     private String productid;
 
 
-    //    @Min(value = 1)
-    //    @Max(value = 10)
+    // @Min(value = 1)
+    // @Max(value = 10)
     @Range(min = 1, max = 10, message = "数量范围1~5")
     private Integer quantity;
 }

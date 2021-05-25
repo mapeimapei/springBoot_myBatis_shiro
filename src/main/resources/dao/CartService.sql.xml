@@ -19,10 +19,36 @@
         <include refid="whereCart"></include>
     </update>
 
-    <!-- 添加购物车-->
+    <!-- 查询购物车是否存在当前商品-->
     <select id="selectCart" parameterType="com.mapei.www.entity.Cart" resultType="Integer">
         select COUNT(*) from cart
         <include refid="whereCart"></include>
+    </select>
+
+
+<!--    <resultMap id="CartuserResultMap" type="map" autoMapping="true">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <association property="user" javaType="com.zpc.mybatis.pojo.User" autoMapping="true">-->
+<!--            <id column="user_id" property="id"/>-->
+<!--        </association>-->
+<!--        <collection property="detailList" javaType="List" ofType="com.zpc.mybatis.pojo.OrderDetail" autoMapping="true">-->
+<!--            <id column="id" property="id"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+
+    <!-- 根据userid 获取用户购物车数据-->
+    <select id="getCartList" resultType="map">
+        SELECT
+            c.productid,
+            c.quantity,
+            p.category,
+            p.image,
+            p.descn,
+            p.listprice,
+            p.cname
+        FROM cart c,products p
+        WHERE c.productid = p.productid AND c.userid = #{userid}
     </select>
 
 

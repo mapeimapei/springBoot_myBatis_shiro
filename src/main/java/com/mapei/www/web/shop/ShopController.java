@@ -54,6 +54,17 @@ public class ShopController {
      * 获取商品列表
      * @return
      */
+    @GetMapping("cart/getCartList/{user_id}")
+    public ResponseData getCartList(@PathVariable("user_id") String user_id) {
+        List<Map<String, Object>> list = cartService.getCartList(user_id);
+        return new ResponseData(ExceptionMsg.SUCCESS, list);
+    }
+
+
+    /**
+     * 获取商品列表
+     * @return
+     */
     @GetMapping("products")
     public ResponseData getProducts() {
         List<Products> list = productsService.getProducts();

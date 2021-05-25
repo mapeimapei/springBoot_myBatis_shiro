@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class CartService implements ICartService {
@@ -27,8 +28,6 @@ public class CartService implements ICartService {
         return n;
     }
 
-    ;
-
     /**
      * 更新购物车
      *
@@ -39,8 +38,6 @@ public class CartService implements ICartService {
         System.out.println(n);
         return n;
     }
-
-    ;
 
     /**
      * 查询购物车是否存在当前商品
@@ -53,6 +50,15 @@ public class CartService implements ICartService {
         return n;
     }
 
-    ;
+    /**
+     * 根据userid 获取用户购物车数据
+     *
+     * @return map
+     */
+    public List<Map<String, Object>> getCartList(String user_id) {
+        List<Map<String, Object>> list = cartServiceDao.getCartList(user_id);
+        return list;
+    }
+
 
 }

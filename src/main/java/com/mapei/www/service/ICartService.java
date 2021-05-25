@@ -3,6 +3,7 @@ package com.mapei.www.service;
 import com.mapei.www.entity.Cart;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICartService {
     /**
@@ -25,7 +26,10 @@ public interface ICartService {
      */
     public Integer selectCart(Cart cart);
 
-
-
+    /**
+     * 根据userid 获取用户购物车数据
+     * @return map
+     */
+    public List<Map<String,Object>> getCartList(String user_id);
 
 }
