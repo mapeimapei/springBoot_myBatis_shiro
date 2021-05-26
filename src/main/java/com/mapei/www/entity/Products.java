@@ -9,6 +9,7 @@ public class Products {
     private String ename;
     private String image;
     private String productid;
-    private Integer listprice;
+    private Double listprice;
     private Integer unitcost;
+    private Integer quantity;
 }
