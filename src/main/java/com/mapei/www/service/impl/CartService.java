@@ -8,6 +8,7 @@ import com.mapei.www.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,21 @@ public class CartService implements ICartService {
         List<Map<String, Object>> list = cartServiceDao.getCartList(user_id);
         return list;
     }
+
+
+    /**
+     * 删除购物车
+     * @param userid
+     * @param productids
+     * @return
+     */
+    public Integer deleteCart(String userid, ArrayList<String> productids){
+        Integer n = cartServiceDao.deleteCart(userid,productids);
+        return n;
+    }
+
+
+
 
 
 }

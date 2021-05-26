@@ -2,6 +2,7 @@ package com.mapei.www.service;
 
 import com.mapei.www.entity.Cart;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,14 @@ public interface ICartService {
      * @return map
      */
     public List<Map<String,Object>> getCartList(String user_id);
+
+    /**
+     * 删除购物车
+     * @param userid
+     * @param productids
+     * @return
+     */
+    public Integer deleteCart(String userid, ArrayList<String> productids);
+
 
 }

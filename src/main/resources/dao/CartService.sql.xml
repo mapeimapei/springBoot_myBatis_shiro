@@ -51,5 +51,14 @@
         WHERE c.productid = p.productid AND c.userid = #{userid}
     </select>
 
+    <delete id="deleteCart">
+        delete from cart
+        WHERE
+            userid=#{userid} AND
+            productid in
+            <foreach collection="productids"  open="(" close=")" separator=","  item="item">
+                #{item}
+            </foreach>
+    </delete>
 
 </mapper>

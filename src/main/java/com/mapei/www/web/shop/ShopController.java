@@ -9,10 +9,12 @@ import com.mapei.www.exception.ValidatorUtils;
 import com.mapei.www.result.ExceptionMsg;
 import com.mapei.www.result.ResponseData;
 import io.swagger.annotations.Api;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class ShopController {
      * @return
      */
     @PostMapping("cart/addCart")
-    public ResponseData addCart(@Validated @RequestBody Cart cart) {
+    public ResponseData addCart(@Validated @RequestBody Cart cart) throws Exception {
         Integer selectCart = cartService.selectCart(cart);
         Integer n;
         if (selectCart > 0) {
@@ -52,10 +54,11 @@ public class ShopController {
 
     /**
      * 获取商品列表
+     *
      * @return
      */
     @GetMapping("cart/getCartList/{user_id}")
-    public ResponseData getCartList(@PathVariable("user_id") String user_id) {
+    public ResponseData getCartList(@PathVariable("user_id") String user_id) throws Exception {
         List<Map<String, Object>> list = cartService.getCartList(user_id);
         return new ResponseData(ExceptionMsg.SUCCESS, list);
     }
@@ -63,13 +66,34 @@ public class ShopController {
 
     /**
      * 获取商品列表
+     *
      * @return
      */
     @GetMapping("products")
-    public ResponseData getProducts() {
+    public ResponseData getProducts() throws Exception {
         List<Products> list = productsService.getProducts();
         return new ResponseData(ExceptionMsg.SUCCESS, list);
     }
 
+    /**
+     * 删除购物车
+     *
+     * @param params
+     * @return
+     */
+
+    @PostMapping("cart/deleteCart")
+    public ResponseData deleteCart(@RequestBody Map params) throws Exception {
+        String userid = (String) params.get("userid");
+        ArrayList<String> productids = (ArrayList<String>) params.get("productids");
+        Integer n = cartService.deleteCart(userid, productids);
+        System.out.println(n);
+        if (n > 0) {
+            return new ResponseData(ExceptionMsg.SUCCESS);
+        } else {
+            return new ResponseData(ExceptionMsg.FAILED);
+        }
+
+    }
 
 }

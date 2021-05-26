@@ -3,6 +3,7 @@ package com.mapei.www.dao;
 import com.mapei.www.entity.Cart;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,5 +21,6 @@ public interface CartServiceDao {
     // 根据userid 获取用户购物车数据
     public List<Map<String,Object>> getCartList(String user_id);
 
-
+    // 删除购物车
+    public Integer deleteCart(String userid, ArrayList<String> productids);
 }
