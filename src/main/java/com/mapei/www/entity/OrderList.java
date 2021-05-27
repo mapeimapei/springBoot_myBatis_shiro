@@ -1,10 +1,11 @@
 package com.mapei.www.entity;
+
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class OrderDetail {
+public class OrderList {
     private String orderid;
     private String productid;
     private Integer quantity;

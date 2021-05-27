@@ -16,9 +16,9 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 @MapperScan({"com.mapei.www.dao"})
 public class DemoWebApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoWebApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoWebApplication.class, args);
+    }
 
 //	@Bean
 //	public HttpMessageConverters fastJsonHttpMessageConverters() {

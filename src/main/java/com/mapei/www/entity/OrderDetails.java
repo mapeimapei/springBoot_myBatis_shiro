@@ -1,4 +1,5 @@
 package com.mapei.www.entity;
+
 import lombok.Data;
 
 import java.util.List;
@@ -10,13 +11,7 @@ public class OrderDetails {
     private String orderdate;
     private int status = 0;
     private Double amount;
-    private List<OrderDetail> orderList;
-
-
-
-
-
-
+    private List<OrderList> orderList;
 
 
 }

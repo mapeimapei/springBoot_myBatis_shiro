@@ -5,21 +5,21 @@
 
     <resultMap id="queryOrdersDetailsMap" type="com.mapei.www.entity.OrderDetails">
 
-        <id property="orderid" column="orderid" />
-        <result property="orderdate" column="orderdate" />
-        <result property="status" column="status" />
-        <result property="amount" column="amount" />
+        <id property="orderid" column="orderid"/>
+        <result property="orderdate" column="orderdate"/>
+        <result property="status" column="status"/>
+        <result property="amount" column="amount"/>
 
-        <collection property="orderList" javaType="List" ofType="com.mapei.www.entity.OrderDetail">
-            <id property="productid" column="productid" />
-            <result property="quantity" column="quantity" />
+        <collection property="orderList" javaType="List" ofType="com.mapei.www.entity.OrderList">
+            <id property="productid" column="productid"/>
+            <result property="quantity" column="quantity"/>
 
             <association property="products" javaType="com.mapei.www.entity.Products">
-                <result property="cname" column="cname" />
-                <result property="category" column="category" />
-                <result property="descn" column="descn" />
-                <result property="image" column="image" />
-                <result property="listprice" column="listprice" />
+                <result property="cname" column="cname"/>
+                <result property="category" column="category"/>
+                <result property="descn" column="descn"/>
+                <result property="image" column="image"/>
+                <result property="listprice" column="listprice"/>
             </association>
 
         </collection>
@@ -29,21 +29,21 @@
 
     <select id="queryOrdersDetails" resultMap="queryOrdersDetailsMap">
         select
-            a.orderid,
-            CAST(a.orderdate AS CHAR),
-            a.status,
-            a.amount,
-            b.productid,
-            b.quantity,
-            c.category,
-            c.descn,
-            c.image,
-            c.cname,
-            c.listprice
+        a.orderid,
+        CAST(a.orderdate AS CHAR),
+        a.status,
+        a.amount,
+        b.productid,
+        b.quantity,
+        c.category,
+        c.descn,
+        c.image,
+        c.cname,
+        c.listprice
         from
-            orders a
-            left join orderdetails b on a.orderid = b.orderid
-            left join products c on b.productid = c.productid
+        orders a
+        left join orderdetails b on a.orderid = b.orderid
+        left join products c on b.productid = c.productid
         where a.userid = #{userid} and a.orderid = #{orderid}
     </select>
 </mapper>

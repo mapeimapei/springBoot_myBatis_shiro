@@ -11,7 +11,7 @@ import java.util.Map;
 public interface OrderDetailsServiceDao {
 
     // 查询订单详情
-    public OrderDetails queryOrdersDetails(String userid,String orderid);
+    public OrderDetails queryOrdersDetails(String userid, String orderid);
 
 
 }
