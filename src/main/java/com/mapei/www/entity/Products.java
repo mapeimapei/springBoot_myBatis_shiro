@@ -10,6 +10,6 @@ public class Products {
     private String image;
     private String productid;
     private Double listprice;
-    private Integer unitcost;
+    private Double unitcost;
     private Integer quantity;
 }

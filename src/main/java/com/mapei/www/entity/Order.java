@@ -3,6 +3,7 @@ package com.mapei.www.entity;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 public class Order {
@@ -20,6 +21,7 @@ public class Order {
     private int status = 0;
 
     private Double amount;
+
 
 
 }

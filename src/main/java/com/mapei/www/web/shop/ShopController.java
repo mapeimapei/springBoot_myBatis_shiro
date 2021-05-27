@@ -8,8 +8,9 @@ import com.mapei.www.entity.Order;
 import com.mapei.www.entity.OrderDetails;
 import com.mapei.www.service.impl.ProductsService;
 import com.mapei.www.service.impl.CartService;
-
 import com.mapei.www.service.impl.OrderService;
+import com.mapei.www.service.impl.OrderDetailsService;
+
 
 import com.mapei.www.exception.ValidatorUtils;
 import com.mapei.www.result.ExceptionMsg;
@@ -41,6 +42,9 @@ public class ShopController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    OrderDetailsService orderDetailsService;
 
 
     /**
@@ -106,11 +110,11 @@ public class ShopController {
         } else {
             return new ResponseData(ExceptionMsg.FAILED);
         }
-
     }
 
     /**
      * 生成订单
+     *
      * @return
      */
     @PostMapping("order/addOrder")
@@ -128,31 +132,40 @@ public class ShopController {
         order.setOrderdate(created_at);
 
         Double amount = 0.0;
-        for(Object obj : productList){
-            Products products = JSONObject.parseObject(toJSONString(obj),Products.class);
+        for (Object obj : productList) {
+            Products products = JSONObject.parseObject(toJSONString(obj), Products.class);
             Double price = products.getListprice() * products.getQuantity();
             amount += price;
         }
 
         order.setAmount(amount);
 
-        int n =  orderService.addOrder(userid,productList,order);
+        int n = orderService.addOrder(userid, productList, order);
         System.out.println(n);
 
         if (n > 0) {
-            Map<String,String> res = new HashMap<>();
-            res.put("orderid",uuid);
-            return new ResponseData(ExceptionMsg.SUCCESS,res);
+            Map<String, String> res = new HashMap<>();
+            res.put("orderid", uuid);
+            return new ResponseData(ExceptionMsg.SUCCESS, res);
         } else {
             return new ResponseData(ExceptionMsg.FAILED);
         }
     }
 
 
-
-
-
-
+    /**
+     * 查询订单详情
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("order/getOrdersDetailsById")
+    public ResponseData queryOrdersDetails(@RequestBody Map params) throws Exception {
+        String userid = (String) params.get("userid");
+        String orderid = (String) params.get("orderid");
+        OrderDetails orderDetails = orderDetailsService.queryOrdersDetails(userid, orderid);
+        return new ResponseData(ExceptionMsg.SUCCESS,orderDetails);
+    }
 
 
 
