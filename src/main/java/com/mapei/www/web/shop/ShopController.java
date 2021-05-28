@@ -119,6 +119,7 @@ public class ShopController {
      */
     @PostMapping("order/addOrder")
     public ResponseData addCart(@RequestBody Map params) throws Exception {
+        String fast = (String) params.get("fast");
         String userid = (String) params.get("userid");
         List<Products> productList = (List<Products>) params.get("productList");
 
@@ -140,7 +141,7 @@ public class ShopController {
 
         order.setAmount(amount);
 
-        int n = orderService.addOrder(userid, productList, order);
+        int n = orderService.addOrder(userid, productList, order, fast);
         System.out.println(n);
 
         if (n > 0) {
@@ -182,6 +183,7 @@ public class ShopController {
 
     /**
      * 删除订单
+     *
      * @param params
      * @return
      * @throws Exception
@@ -200,6 +202,7 @@ public class ShopController {
 
     /**
      * 删除订单中的商品
+     *
      * @param params
      * @return
      * @throws Exception
@@ -208,7 +211,7 @@ public class ShopController {
     public ResponseData deleteProductInOrderDetails(@RequestBody Map params) throws Exception {
         String orderid = (String) params.get("orderid");
         String productid = (String) params.get("productid");
-        Integer n = orderDetailsService.deleteProductInOrderDetails(orderid,productid);
+        Integer n = orderDetailsService.deleteProductInOrderDetails(orderid, productid);
         if (n > 0) {
             return new ResponseData(ExceptionMsg.SUCCESS);
         } else {

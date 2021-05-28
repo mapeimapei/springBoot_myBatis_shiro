@@ -19,6 +19,14 @@ public class BlogMavController {
     @Autowired
     PostService postService;
 
+//    @GetMapping("/")
+//    public ModelAndView home() throws Exception {
+//        ModelAndView modelAndView = new ModelAndView("index");
+//        return modelAndView;
+//    }
+//
+
+
     /**
      *获取文章列表
      * @param m
@@ -27,7 +35,7 @@ public class BlogMavController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index(Model m, @RequestParam(value="start",defaultValue="0")int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         PageHelper.startPage(start,size,"created_at desc");
         List<Post> cs = postService.getPost();
@@ -45,12 +53,25 @@ public class BlogMavController {
      * @throws Exception
      */
     @GetMapping("/single")
-    public ModelAndView index( @RequestParam String id) throws Exception {
+    public ModelAndView single( @RequestParam String id) throws Exception {
         Post post = postService.queryPostById(id);
         ModelAndView modelAndView = new ModelAndView("single");
         modelAndView.addObject("post", post);
         return modelAndView;
     }
+
+
+    /**
+     * 后台管理
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/admin")
+    public ModelAndView admin() throws Exception {
+        ModelAndView modelAndView = new ModelAndView("admin");
+        return modelAndView;
+    }
+
 
 
 }

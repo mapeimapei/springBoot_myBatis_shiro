@@ -13,7 +13,7 @@ public interface IOrderService {
      * 生成订单
      * @return 增加条数
      */
-    public Integer addOrder(String userid,List<Products> productList,Order order);
+    public Integer addOrder(String userid,List<Products> productList,Order order,String fast);
 
     /**
      * 获取订单列表

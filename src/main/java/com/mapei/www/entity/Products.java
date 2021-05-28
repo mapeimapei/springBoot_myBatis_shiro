@@ -12,4 +12,5 @@ public class Products {
     private Double listprice;
     private Double unitcost;
     private Integer quantity;
+
 }

@@ -22,8 +22,8 @@ public class OrderService implements IOrderService {
      *
      * @return row 数量
      */
-    public Integer addOrder(String userid,List<Products> productList,Order order) {
-        Integer n = orderServiceDao.addOrder(userid,productList,order);
+    public Integer addOrder(String userid,List<Products> productList,Order order,String fast) {
+        Integer n = orderServiceDao.addOrder(userid,productList,order,fast);
         return n;
     }
 

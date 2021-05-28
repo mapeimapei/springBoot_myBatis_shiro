@@ -6,13 +6,16 @@
     <!-- 添加订单-->
     <insert id="addOrder">
         <!--先删除购物车里的数据-->
-        delete from cart
-        WHERE
-        userid=#{userid} AND
-        productid in
-        <foreach collection='productList'  open="(" close=")" separator=","  item="item">
-            #{item.productid}
-        </foreach>;
+
+        <if test="fast ==null or  fast ==''">
+            delete from cart
+            WHERE
+            userid=#{userid} AND
+            productid in
+            <foreach collection='productList'  open="(" close=")" separator=","  item="item">
+                #{item.productid}
+            </foreach>;
+        </if >
 
         <!--插入订单-->
         insert INTO orders

@@ -11,8 +11,8 @@ import java.util.Map;
 @Component
 public interface OrderServiceDao {
 
-    // 添加购物车
-    public Integer addOrder(String userid,List<Products> productList,Order order);
+    // 生成订单
+    public Integer addOrder(String userid,List<Products> productList,Order order, String fast);
 
     // 获取订单列表
     public List<Order> getOrderList(String userid);

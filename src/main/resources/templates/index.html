@@ -47,10 +47,10 @@
                 </article>
 
                 <div id="pagenavi" class="J_index_pagenavi">
-                    <a class="page-numbers" th:href="@{/index?start=1}">[首页]</a>
-                    <a class="page-numbers" th:if="${not page.IsFirstPage}" th:href="@{/index(start=${page.pageNum-1})}">[上页]</a>
-                    <a class="page-numbers" th:if="${not page.IsLastPage}" th:href="@{/index(start=${page.pageNum+1})}">[下页]</a>
-                    <a class="page-numbers" th:href="@{/index(start=${page.pages})}">[末页]</a>
+                    <a class="page-numbers" th:href="@{/}">[首页]</a>
+                    <a class="page-numbers" th:if="${not page.IsFirstPage}" th:href="@{/(start=${page.pageNum-1})}">[上页]</a>
+                    <a class="page-numbers" th:if="${not page.IsLastPage}" th:href="@{/(start=${page.pageNum+1})}">[下页]</a>
+                    <a class="page-numbers" th:href="@{/(start=${page.pages})}">[末页]</a>
                 </div>
 
                 <!-- // content -->
