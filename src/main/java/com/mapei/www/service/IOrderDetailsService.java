@@ -12,4 +12,13 @@ public interface IOrderDetailsService {
     public OrderDetails queryOrdersDetails(String userid,String orderid);
 
 
+    /**
+     * 删除订单中的商品
+     * @param orderid
+     * @param productid
+     * @return
+     */
+    public Integer deleteProductInOrderDetails(String orderid,String productid);
+
+
 }

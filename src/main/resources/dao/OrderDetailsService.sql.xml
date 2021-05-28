@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mapei.www.dao.OrderDetailsServiceDao">
-
     <resultMap id="queryOrdersDetailsMap" type="com.mapei.www.entity.OrderDetails">
-
         <id property="orderid" column="orderid"/>
         <result property="orderdate" column="orderdate"/>
         <result property="status" column="status"/>
@@ -28,22 +26,37 @@
     </resultMap>
 
     <select id="queryOrdersDetails" resultMap="queryOrdersDetailsMap">
-        select
-        a.orderid,
-        CAST(a.orderdate AS CHAR),
-        a.status,
-        a.amount,
-        b.productid,
-        b.quantity,
-        c.category,
-        c.descn,
-        c.image,
-        c.cname,
-        c.listprice
-        from
-        orders a
-        left join orderdetails b on a.orderid = b.orderid
-        left join products c on b.productid = c.productid
-        where a.userid = #{userid} and a.orderid = #{orderid}
+        SELECT
+            a.orderid,
+            CAST(a.orderdate AS CHAR),
+            a.status,
+            a.amount,
+            b.productid,
+            b.quantity,
+            c.category,
+            c.descn,
+            c.image,
+            c.cname,
+            c.listprice
+        FROM
+            orders a
+            left join orderdetails b on a.orderid = b.orderid
+            left join products c on b.productid = c.productid
+        WHERE a.userid = #{userid} and a.orderid = #{orderid}
     </select>
+
+    <!--删除订单-->
+    <delete id="deleteProductInOrderDetails">
+        DELETE FROM orderdetails where orderid = #{orderid} AND productid = #{productid};
+
+        <!--更新订单总价-->
+        UPDATE orders
+        SET amount = (SELECT sum(unitcost) FROM orderdetails WHERE orderid=#{orderid} GROUP BY orderid)
+        WHERE orderid=#{orderid}
+
+    </delete>
+
+
+
+
 </mapper>

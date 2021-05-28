@@ -24,4 +24,16 @@ public class OrderDetailsService implements IOrderDetailsService {
         return orderDetails;
     }
 
+    /**
+     * 删除订单中的商品
+     * @param orderid
+     * @param productid
+     * @return
+     */
+    public Integer deleteProductInOrderDetails(String orderid,String productid){
+        Integer n = orderDetailsServiceDao.deleteProductInOrderDetails(orderid,productid);
+        return n;
+    }
+
+
 }

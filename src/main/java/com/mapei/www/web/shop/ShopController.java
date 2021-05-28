@@ -155,6 +155,7 @@ public class ShopController {
 
     /**
      * 查询订单详情
+     *
      * @param params
      * @return
      * @throws Exception
@@ -164,10 +165,55 @@ public class ShopController {
         String userid = (String) params.get("userid");
         String orderid = (String) params.get("orderid");
         OrderDetails orderDetails = orderDetailsService.queryOrdersDetails(userid, orderid);
-        return new ResponseData(ExceptionMsg.SUCCESS,orderDetails);
+        return new ResponseData(ExceptionMsg.SUCCESS, orderDetails);
     }
 
 
+    /**
+     * 获取商品列表
+     *
+     * @return
+     */
+    @GetMapping("order/getOrderList/{userid}")
+    public ResponseData getOrderList(@PathVariable("userid") String userid) throws Exception {
+        List<Order> list = orderService.getOrderList(userid);
+        return new ResponseData(ExceptionMsg.SUCCESS, list);
+    }
 
+    /**
+     * 删除订单
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("order/deleteOrder")
+    public ResponseData deleteOrder(@RequestBody Map params) throws Exception {
+        String userid = (String) params.get("userid");
+        String orderid = (String) params.get("orderid");
+        Integer n = orderService.deleteOrder(userid, orderid);
+        if (n > 0) {
+            return new ResponseData(ExceptionMsg.SUCCESS);
+        } else {
+            return new ResponseData(ExceptionMsg.FAILED);
+        }
+    }
+
+    /**
+     * 删除订单中的商品
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("order/deleteProductInOrderDetails")
+    public ResponseData deleteProductInOrderDetails(@RequestBody Map params) throws Exception {
+        String orderid = (String) params.get("orderid");
+        String productid = (String) params.get("productid");
+        Integer n = orderDetailsService.deleteProductInOrderDetails(orderid,productid);
+        if (n > 0) {
+            return new ResponseData(ExceptionMsg.SUCCESS);
+        } else {
+            return new ResponseData(ExceptionMsg.FAILED);
+        }
+    }
 
 }

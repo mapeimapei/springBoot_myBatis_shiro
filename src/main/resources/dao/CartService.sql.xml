@@ -51,6 +51,7 @@
         WHERE c.productid = p.productid AND c.userid = #{userid}
     </select>
 
+    <!--删除购物车-->
     <delete id="deleteCart">
         delete from cart
         WHERE

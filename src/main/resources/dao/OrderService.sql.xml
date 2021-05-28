@@ -34,22 +34,30 @@
 
         <!--插入订单详情数据-->
         insert INTO orderdetails
-            (orderid,productid,quantity)
+            (orderid,productid,quantity,unitcost)
         VALUES
         <foreach collection="productList" item="item" separator=",">
-            (#{order.orderid}, #{item.productid}, #{item.quantity})
+            (#{order.orderid}, #{item.productid}, #{item.quantity}, ${item.listprice * item.quantity})
         </foreach>
     </insert>
 
+    <select id="getOrderList" resultType="com.mapei.www.entity.Order">
+        select
+            orderid,
+            cast(orderdate AS char) as orderdate,
+            status,
+            amount
+        from orders
+        where userid = #{userid}
+        ORDER BY orderdate desc
+    </select>
 
-    <delete id="deleteCart">
-        delete from cart
-        WHERE
-            userid=#{userid} AND
-            productid in
-            <foreach collection="productids"  open="(" close=")" separator=","  item="item">
-                #{item}
-            </foreach>
+    <!--删除订单-->
+    <delete id="deleteOrder">
+        <!--删除订单表数据-->
+        DELETE FROM orders where orderid = #{orderid} AND userid = #{userid};
+        <!--删除订单详情-->
+        DELETE FROM orderdetails where orderid = #{orderid};
     </delete>
 
 </mapper>

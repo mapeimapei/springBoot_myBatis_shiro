@@ -24,8 +24,30 @@ public class OrderService implements IOrderService {
      */
     public Integer addOrder(String userid,List<Products> productList,Order order) {
         Integer n = orderServiceDao.addOrder(userid,productList,order);
-        System.out.println(n);
         return n;
     }
+
+
+    /**
+     * 获取订单列表
+     * @param userid
+     * @return
+     */
+    public List<Order> getOrderList(String userid){
+        List<Order> list = orderServiceDao.getOrderList(userid);
+        return list;
+    }
+
+    /**
+     * 删除订单
+     * @param userid
+     * @param orderid
+     * @return
+     */
+    public Integer deleteOrder(String userid,String orderid){
+        Integer n = orderServiceDao.deleteOrder(userid,orderid);
+        return n;
+    }
+
 
 }

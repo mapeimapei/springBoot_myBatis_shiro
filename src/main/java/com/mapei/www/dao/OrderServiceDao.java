@@ -11,8 +11,16 @@ import java.util.Map;
 @Component
 public interface OrderServiceDao {
 
-
     // 添加购物车
     public Integer addOrder(String userid,List<Products> productList,Order order);
+
+    // 获取订单列表
+    public List<Order> getOrderList(String userid);
+
+    // 删除订单
+    public Integer deleteOrder(String userid,String orderid);
+
+
+
 
 }

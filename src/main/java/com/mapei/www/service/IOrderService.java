@@ -15,5 +15,20 @@ public interface IOrderService {
      */
     public Integer addOrder(String userid,List<Products> productList,Order order);
 
+    /**
+     * 获取订单列表
+     * @param userid
+     * @return
+     */
+    public List<Order> getOrderList(String userid);
+
+    /**
+     * 删除订单
+     * @param userid
+     * @param orderid
+     * @return
+     */
+    public Integer deleteOrder(String userid,String orderid);
+
 
 }
