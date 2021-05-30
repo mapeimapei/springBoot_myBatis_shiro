@@ -1,7 +1,7 @@
 # springBoot_myBatis_shiro
 
 ## 说明
-项目是将awesome-flask-webapp（python-flask写的，https://github.com/mapeimapei/awesome-flask-webapp）用java重构了一遍：
+项目是将awesome-flask-webapp（python-flask写的，https://github.com/mapeimapei/awesome-flask-webapp ）用java重构了一遍：
 
 项目依然包括博客+宠物商店。
 
