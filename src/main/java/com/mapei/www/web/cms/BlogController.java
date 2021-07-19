@@ -9,6 +9,9 @@ import com.mapei.www.result.ResponseData;
 import com.mapei.www.service.impl.PostService;
 import io.swagger.annotations.Api;
 import org.apache.ibatis.jdbc.Null;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,7 @@ public class BlogController {
      * @return
      */
     @GetMapping("post/getPosts")
+    @RequiresAuthentication
     public ResponseData getPosts() {
         List<Post> cs = postService.getPost();
         String[] fields = {
