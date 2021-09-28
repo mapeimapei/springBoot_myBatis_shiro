@@ -118,7 +118,7 @@ public class ShopController {
      * @return
      */
     @PostMapping("order/addOrder")
-    public ResponseData addCart(@RequestBody Map params) throws Exception {
+    public ResponseData addOrder(@RequestBody Map params) throws Exception {
         String fast = (String) params.get("fast");
         String userid = (String) params.get("userid");
         List<Products> productList = (List<Products>) params.get("productList");
